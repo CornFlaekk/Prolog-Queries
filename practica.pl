@@ -38,14 +38,58 @@ impar(s(0)).
 impar(s(s(X))) :- impar(X).
 
 %Multiplicación
-mult(0,X,0).
+mult(0,_,0).
 %mult(s(0),X,X). No es necesario
 mult(s(X),Y,E) :- mult(X,Y,Z),
 			  suma(Z,Y,E).
 			  
 %------------ · · MÍO · · ----------------
 % Exponencial
-exp(X,0,s(0)).
+exp(_,0,s(0)).
 exp(X,s(Y),E) :- exp(X,Y,Z),
 			 mult(Z,X,E).
 %-----------------------------------------
+
+
+%-----------------------------------------
+%PRÁCTICA 2
+%-----------------------------------------
+
+
+% Primero 
+primero([Car|_],Car).
+
+% Segundo
+segundo([_|[Seg|_]],Seg).
+
+% Ultimo
+ultimo([Cdr],Cdr).
+ultimo([_|Cdr],X) :- ultimo(Cdr,X).
+
+% Penúltimo
+penultimo([Car|[_]],Car).
+penultimo([_|Cdr],X) :- penultimo(Cdr,X).
+
+
+% Miembro
+miembro([Car|_],Car).
+miembro([_|Cdr],X) :- miembro(Cdr,X).
+
+% Concatenar
+concat([],L,L).
+concat([Car|Cdr],L,[Car|R]) :- concat(Cdr,L,R).
+
+% Inversa
+inv([],[]).
+inv([Car|Cdr],R) :- inv(Cdr,I),
+				concat(I,[Car],R).
+				
+% Intercalar
+int([],[],[]).
+int([Car1|Cdr1],[Car2|Cdr2],X) :- 	int(Cdr1,Cdr2,R),
+							concat([Car1],[Car2|R],X).
+							
+							
+% Intercalar SIN CONCAT
+int2([],[],[]).
+int2([Car1|Cdr1],[Car2|Cdr2],[Car1,Car2|R]) :- 	int2(Cdr1,Cdr2,R).
