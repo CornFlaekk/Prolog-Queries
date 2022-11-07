@@ -93,3 +93,53 @@ int([Car1|Cdr1],[Car2|Cdr2],X) :- 	int(Cdr1,Cdr2,R),
 % Intercalar SIN CONCAT
 int2([],[],[]).
 int2([Car1|Cdr1],[Car2|Cdr2],[Car1,Car2|R]) :- 	int2(Cdr1,Cdr2,R).
+
+
+
+%-----------------------------------------
+%PRÁCTICA 3
+%-----------------------------------------
+
+
+% Aydacentes
+ady(X,Y,[X,Y,_]).
+ady(X,Y,[Y,X,_]).
+ady(X,Y,[_,Cdr|Z]) :- ady(X,Y,[Cdr|Z]).
+
+% Subconjunto
+subconj([],_).
+subconj([Car|Cdr],L) :- miembro(L,Car),
+				   subconj(Cdr,L).
+
+% Línea
+linea(_,[],[]).
+linea(E,[Car|Cdr],[[E,Car]|R]) :- linea(E,Cdr,R).
+
+
+%-----------------------------------------
+%PRÁCTICA 4
+%-----------------------------------------
+
+% Producto Cartesiano
+pc([],_,[]).
+pc([Car|Cdr],C,R) :- linea(Car,C,W),	
+				pc(Cdr,C,Z),
+				concat(W,Z,R).
+				
+% Select
+select(Car,[Car|Cdr],Cdr).
+select(E,[Car|Cdr],[Car|R]) :- select(E,Cdr,R).
+
+% Unión
+union([],X,X).
+union([Car|Cdr],Y,Z) :-	miembro(Y,Car),
+					!,
+					union(Cdr,Y,Z).
+union([Car|Cdr],Y,[Car|Z]) :- union(Cdr,Y,Z).
+
+% Intersección
+interseccion([],_,[]).
+interseccion([Car|Cdr],Y,[Car|Z]) :- miembro(Y,Car),
+					!,
+					interseccion(Cdr,Y,Z).
+interseccion([_|Cdr],Y,Z) :- interseccion(Cdr,Y,Z).
