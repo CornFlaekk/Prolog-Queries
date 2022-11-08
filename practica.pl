@@ -143,3 +143,32 @@ interseccion([Car|Cdr],Y,[Car|Z]) :- miembro(Y,Car),
 					!,
 					interseccion(Cdr,Y,Z).
 interseccion([_|Cdr],Y,Z) :- interseccion(Cdr,Y,Z).
+
+
+
+%-----------------------------------------
+%PRÁCTICA 5
+%-----------------------------------------
+
+% Conjunto
+conjunto([]).
+conjunto([Car|Cdr]) :- 	miembro(Cdr,Car),
+					!,
+					fail.
+conjunto([_|Cdr]) :-	conjunto(Cdr).
+
+% Partir
+partir(_,[],[],[]).
+partir(P,[Car|Cdr],[Car|Men],May):- 	Car<P,
+							!,
+							partir(P,Cdr,Men,May).
+					
+partir(P,[Car|Cdr],Men,[Car|May]):-	partir(P,Cdr,Men,May).
+
+
+% QuickSort
+quick([],[]).
+quick([Car|Cdr],R) :- 	partir(Car,Cdr,Men,May),
+					quick(Men,M1),
+					quick(May,M2),
+					concat(M1,[Car|M2],R).
