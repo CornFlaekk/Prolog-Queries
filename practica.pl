@@ -172,3 +172,6 @@ quick([Car|Cdr],R) :- 	partir(Car,Cdr,Men,May),
 					quick(Men,M1),
 					quick(May,M2),
 					concat(M1,[Car|M2],R).
+					
+prefijo([],_).
+prefijo([Car|Cdr],[Car|L]) :- prefijo(Cdr,L).
