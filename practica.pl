@@ -175,3 +175,72 @@ quick([Car|Cdr],R) :- 	partir(Car,Cdr,Men,May),
 					
 prefijo([],_).
 prefijo([Car|Cdr],[Car|L]) :- prefijo(Cdr,L).
+
+
+%-----------------------------------------
+%PRÁCTICA 6
+%-----------------------------------------
+:- op(600,xfy,[\]).
+
+% Inverso c/ DL
+inverso_l(L,I) :- inverso_dl(L,I\[]).				
+
+inverso_dl([],X\X).
+inverso_dl([Car|Cdr],X\Y) :- inverso_dl(Cdr,X\[Car|Y]).
+
+
+
+%Aplanar c/ DL
+apla(L,R) :- aplanar_dl(L,R\[]).
+
+aplanar_dl([],X\X).
+aplanar_dl(Atomo, [Atomo|Cdr]\Cdr) :- atomic(Atomo), Atomo \== [].
+aplanar_dl([Car|Cdr], X\Z)  :- 	aplanar_dl(Car, X\Y),
+						aplanar_dl(Cdr, Y\Z).
+
+
+
+% Línea c/ DL
+linea_l(Elemento,L,R) :- linea_dl(Elemento,L,R\[]).
+
+linea_dl(_,[],X\X).
+linea_dl(Elemento,[Car|Cdr],[[Elemento,Car]|X]\Y) :- linea_dl(Elemento,Cdr,X\Y).
+
+
+
+% Producto Cartesiano c/ DL
+cart(L,C,R) :- pc_dl(L,C,R\[]).
+
+pc_dl([],_,X\X).
+pc_dl([Car|Cdr],C,X\Z) :- linea_dl(Car,C,X\Y),
+					pc_dl(Cdr,C,Y\Z).
+				
+				
+			
+% Hanoi	
+:- op(500,xfy,[a]).				
+hanoi1(1,A,B,_,[A a B]) :- !.
+hanoi1(N,A,B,C,Movs) :- N1 is N - 1,
+                        hanoi1(N1,A,C,B,Movs_1),
+                        hanoi1(N1,C,B,A,Movs_2),
+                        append(Movs_1,[A a B|Movs_2],Movs).
+
+
+
+% Hanoi c/ DL
+hanoi(N,A,B,C,Movs) :- hanoi_dl(N,A,B,C,Movs\[]).
+
+hanoi_dl(1,A,B,_,[A a B|X]\X) :- !.
+hanoi_dl(N,A,B,C,X\Z) :- N1 is N - 1,
+					hanoi_dl(N1,A,C,B,X\[A a B|Y]),
+					hanoi_dl(N1,C,B,A,Y\Z).
+					
+						
+		
+% QuickSort c/ DL
+quicksort(L,R) :- quick_dl(L,R\[]).
+
+quick_dl([],X\X).
+quick_dl([Car|Cdr], X\Z)   :- 	partir(Car,Cdr,Men,May),
+						quick_dl(Men,X\[Car|Y]),
+						quick_dl(May,Y\Z).
