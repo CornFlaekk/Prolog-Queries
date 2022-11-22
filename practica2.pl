@@ -91,9 +91,17 @@ partir(P,[Car|Cdr],[Car|Men],May):- 	Car<P,
 					
 partir(P,[Car|Cdr],Men,[Car|May]):-	partir(P,Cdr,Men,May).
 
+%Partir c/ DL
+partir2(P,L,Men,May) :- partir_dl(P,L,Men\[],May\[]).
+partir_dl(_,[],X\X,Y\Y).
+partir_dl(P,[Car|Cdr],[Car|X]\C,Y\S) :- 	Car<P,
+								!,
+								partir_dl(P,Cdr,X\C,Y\S).
+partir_dl(P,[Car|Cdr],X\C,[Car|Y]\S) :-  partir_dl(P,Cdr,X\C,Y\S).
+
 %Quicksort c/ DL
 quick(L,R) :- quick_dl(L,R\[]).
 quick_dl([],X\X).
-quick_dl([Car|Cdr],R\C) :-	partir(Car,Cdr,Izq,Der),
+quick_dl([Car|Cdr],R\C) :-	partir2(Car,Cdr,Izq,Der),
 					quick_dl(Izq,R\[Car|S]),
 					quick_dl(Der,S\C).
