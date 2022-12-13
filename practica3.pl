@@ -194,3 +194,11 @@ el quicksort_de [Car|Cdr] es R :-	el partido_de Car y Cdr es Men y May,
 
 el prefijo_de _  es [].
 el prefijo_de [Car|L] es [Car|Cdr] :- el prefijo_de L es Cdr.
+
+%------------------------------------------------------------------------------0
+% DIFERENCIA
+
+gran
+diferencia
+
+
